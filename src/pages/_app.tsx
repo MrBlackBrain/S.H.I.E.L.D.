@@ -5,6 +5,7 @@ import { api } from "~/utils/api";
 import { cn } from "~/lib/utils";
 
 import "~/styles/globals.css";
+import { ThemeProvider } from "~/components/theme-provider";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -13,14 +14,21 @@ const fontSans = FontSans({
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
-    <main
-      className={cn(
-        "bg-background min-h-screen font-sans antialiased",
-        fontSans.variable,
-      )}
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
     >
-      <Component {...pageProps} />
-    </main>
+      <main
+        className={cn(
+          "bg-background min-h-screen font-sans antialiased",
+          fontSans.variable,
+        )}
+      >
+        <Component {...pageProps} />
+      </main>
+    </ThemeProvider>
   );
 };
 

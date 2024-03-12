@@ -20,13 +20,14 @@ model Post {
 }
 
 model Link {
-    id        Int      @id @default(autoincrement())
-    index     Int
-    icon      String
-    name      String
-    url       String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    id          Int      @id @default(autoincrement())
+    index       Int
+    icon        String
+    description String
+    name        String
+    url         String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
 
     @@index([name])
 }

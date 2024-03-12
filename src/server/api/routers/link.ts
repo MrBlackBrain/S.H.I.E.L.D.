@@ -8,8 +8,9 @@ export const linkRouter = createTRPCRouter({
       z.object({
         name: z.string().min(1),
         url: z.string().url(),
-        icon: z.string(),
+        icon: z.string().url(),
         index: z.number(),
+        description: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -21,6 +22,7 @@ export const linkRouter = createTRPCRouter({
           name: input.name,
           url: input.url,
           icon: input.icon,
+          description: input.description,
         },
       });
     }),
