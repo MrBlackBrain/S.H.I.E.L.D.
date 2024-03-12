@@ -18,3 +18,15 @@ model Post {
 
     @@index([name])
 }
+
+model Link {
+    id        Int      @id @default(autoincrement())
+    index     Int
+    icon      String
+    name      String
+    url       String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([name])
+}
