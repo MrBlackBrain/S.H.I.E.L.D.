@@ -22,9 +22,10 @@ model Post {
 model Link {
     id          Int      @id @default(autoincrement())
     index       Int
-    icon        String
-    description String
+    column      Int
     name        String
+    description String
+    icon        String
     url         String
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt

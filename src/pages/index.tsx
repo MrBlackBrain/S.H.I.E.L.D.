@@ -1,90 +1,16 @@
 import Head from "next/head";
-import Link from "next/link";
 import { Search } from "~/components/search";
 import { ThemeToggle } from "~/components/theme-toggle";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
 import { UserNav } from "~/components/user-nav";
 
 import { api } from "~/utils/api";
-import { Reorder } from "framer-motion";
-import { useState } from "react";
-
-const LinkItem = ({
-  link,
-}: {
-  link: {
-    icon: string | undefined;
-    id: number;
-    url: string;
-    name: string;
-    description: string;
-  };
-}) => {
-  return (
-    <Card className="">
-      <CardHeader className="flex flex-row items-start justify-between space-y-0">
-        <div className="space-y-1">
-          <CardTitle>
-            <Link href={link.url} passHref>
-              {link.name}
-            </Link>
-          </CardTitle>
-          <CardDescription>{link.description}</CardDescription>
-        </div>
-        <div className="flex">
-          <img src={link.icon} className="h-16 w-16" />
-        </div>
-      </CardHeader>
-    </Card>
-  );
-};
+import Board from "~/components/board";
+import Link from "next/link";
+import { Plus } from "lucide-react";
+import { Button } from "~/components/ui/button";
 
 export default function Home() {
   const links = api.link.getAll.useQuery();
-
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      name: "Sonarr",
-      url: "https://google.com",
-      description: "Test",
-      icon: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/sonarr.svg",
-    },
-    {
-      id: 2,
-      name: "Radarr",
-      url: "https://google.com",
-      description: "Test",
-      icon: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/radarr.svg",
-    },
-    {
-      id: 3,
-      name: "Prowlarr",
-      url: "https://google.com",
-      description: "Test",
-      icon: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/prowlarr.svg",
-    },
-    {
-      id: 4,
-      name: "Plex",
-      url: "https://google.com",
-      description: "Test",
-      icon: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/plex.svg",
-    },
-    {
-      id: 5,
-      name: "Plex",
-      url: "https://google.com",
-      description: "Test",
-      icon: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/svg/plex.svg",
-    },
-  ]);
 
   return (
     <>
@@ -106,25 +32,19 @@ export default function Home() {
               </h2>
             </div>
             <div className="ml-auto flex items-center space-x-4">
+              <Link href="/add">
+                <Button variant="outline" size="icon">
+                  <Plus className="h-6 w-6 cursor-pointer" />
+                </Button>
+              </Link>
               <ThemeToggle />
               <Search />
               <UserNav />
             </div>
           </div>
         </div>
-        <div className="flex-1 space-y-4 p-8 pt-6">
-          <Reorder.Group
-            axis="y"
-            className="grid grid-rows-4 gap-4"
-            values={items}
-            onReorder={setItems}
-          >
-            {items.map((item) => (
-              <Reorder.Item key={item.id} value={item}>
-                <LinkItem link={item} />
-              </Reorder.Item>
-            ))}
-          </Reorder.Group>
+        <div className="h-screen w-full ">
+          {links.data && <Board links={links.data} />}
         </div>
       </div>
     </>
